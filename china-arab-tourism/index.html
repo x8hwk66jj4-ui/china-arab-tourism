@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة السياحة والثقافة الصينية العربية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            direction: rtl;
+        }
+        
+        /* 导航栏样式 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 5%;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #d50032;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-left: 8px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-right: 25px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+        }
+        
+        .nav-links a:hover {
+            color: #d50032;
+        }
+        
+        .language-switch {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* 首页大图展示 */
+        .hero-section {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)), url('474667f8b2079ccb1320a99816c024fa.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+            margin-top: 70px;
+            position: relative;
+        }
+        
+        .image-copyright {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 5px 10px;
+            border-radius: 3px;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .cta-button {
+            background-color: #d50032;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        
+        .cta-button:hover {
+            background-color: #b00028;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(213, 0, 50, 0.3);
+        }
+        
+        /* 主要内容区域 */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: #222;
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 4px;
+            background-color: #d50032;
+            bottom: -15px;
+            right: 50%;
+            transform: translateX(50%);
+        }
+        
+        /* 城市选择标签 */
+        .city-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 50px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .city-tab {
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            margin: 0 5px;
+        }
+        
+        .city-tab.active {
+            color: #d50032;
+            border-bottom: 3px solid #d50032;
+            font-weight: bold;
+        }
+        
+        .city-tab:hover {
+            color: #d50032;
+        }
+        
+        /* 景点展示 */
+        .city-content {
+            display: none;
+            animation: fadeIn 0.8s;
+        }
+        
+        .city-content.active {
+            display: block;
+        }
+        
+        .attractions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .attraction-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .attraction-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .attraction-img {
+            height: 220px;
+            width: 100%;
+            object-fit: cover;
+            background-color: #f0f0f0; /* 图片加载前的背景色 */
+        }
+        
+        .attraction-info {
+            padding: 25px;
+        }
+        
+        .attraction-name {
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+            color: #222;
+        }
+        
+        .attraction-description {
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.7;
+            max-height: 120px;
+            overflow-y: auto;
+        }
+        
+        .attraction-link {
+            display: inline-block;
+            color: #d50032;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 10px;
+        }
+        
+        .attraction-link i {
+            margin-right: 5px;
+        }
+        
+        /* 详细页面样式 */
+        .detail-page {
+            max-width: 1000px;
+            margin: 100px auto 60px;
+            padding: 0 20px;
+            display: none;
+        }
+        
+        .back-button {
+            display: inline-block;
+            margin-bottom: 30px;
+            color: #d50032;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+        
+        .back-button i {
+            margin-left: 8px;
+        }
+        
+        .detail-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .detail-title {
+            font-size: 2.5rem;
+            color: #222;
+            margin-bottom: 20px;
+        }
+        
+        .detail-main-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            background-color: #f0f0f0; /* 图片加载前的背景色 */
+        }
+        
+        .detail-content {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        .detail-description {
+            margin-bottom: 30px;
+        }
+        
+        .detail-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .detail-button {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #d50032;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .detail-button:hover {
+            background-color: #b00028;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: #222;
+            color: #ddd;
+            padding: 60px 20px 30px;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+        
+        .footer-section h3 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3:after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background-color: #d50032;
+            bottom: 0;
+            right: 0;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #d50032;
+        }
+        
+        .social-icons {
+            display: flex;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #333;
+            color: white;
+            border-radius: 50%;
+            margin-left: 10px;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background-color: #d50032;
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .attractions-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+            
+            .detail-title {
+                font-size: 2.2rem;
+            }
+            
+            .detail-main-image {
+                height: 300px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+            }
+            
+            .nav-links {
+                margin-top: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-links li {
+                margin: 0 10px 10px;
+            }
+            
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .city-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .city-tab {
+                width: 80%;
+                margin-bottom: 10px;
+            }
+            
+            .image-copyright {
+                font-size: 0.7rem;
+                bottom: 10px;
+                right: 10px;
+            }
+            
+            .detail-content {
+                padding: 25px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            
+            .attractions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .detail-title {
+                font-size: 1.8rem;
+            }
+            
+            .detail-main-image {
+                height: 200px;
+            }
+            
+            .detail-links {
+                flex-direction: column;
+            }
+            
+            .detail-button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+        
+        /* 动画 */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* 滚动条样式 */
+        .attraction-description::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .attraction-description::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        .attraction-description::-webkit-scrollbar-thumb {
+            background: #d50032;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 首页内容 -->
+    <div id="home-page">
+        <!-- 导航栏 -->
+        <header>
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <i class="fas fa-globe-asia"></i>
+                    صين - عرب
+                </a>
+                
+                <ul class="nav-links">
+                    <li><a href="#home">الرئيسية</a></li>
+                    <li><a href="#attractions">الوجهات السياحية</a></li>
+                    <li><a href="#about">حول المنصة</a></li>
+                    <li><a href="#contact">اتصل بنا</a></li>
+                </ul>
+                
+                <div class="language-switch">
+                    <i class="fas fa-language"></i> اللغة: العربية
+                </div>
+            </nav>
+        </header>
+
+        <!-- 首页大图展示 -->
+        <section class="hero-section" id="home">
+            <h1 class="hero-title">استكشف جمال الصين</h1>
+            <p class="hero-subtitle">
+                منصة السياحة والثقافة الصينية العربية تقدم لكم أفضل الوجهات السياحية في الصين. اكتشفوا تاريخًا عريقًا، معالمَ ساحرة، وثقافةً غنية.
+            </p>
+            <a href="#attractions" class="cta-button">اكتشف الوجهات الآن <i class="fas fa-arrow-left"></i></a>
+            
+            <!-- 图片版权声明 -->
+            <div class="image-copyright">
+                <i class="far fa-copyright"></i> sipaphoto.com - جميع الحقوق محفوظة
+            </div>
+        </section>
+
+        <!-- 主要景点内容 -->
+        <main class="main-content" id="attractions">
+            <h2 class="section-title">الوجهات السياحية الرئيسية</h2>
+            
+            <!-- 城市选择标签 -->
+            <div class="city-tabs">
+                <button class="city-tab active" data-city="beijing">مدينة بكين</button>
+                <button class="city-tab" data-city="shanghai">مدينة شانغهاي</button>
+            </div>
+            
+            <!-- 北京景点内容 -->
+            <div class="city-content active" id="beijing-content">
+                <div class="attractions-grid">
+                    <!-- 天坛 -->
+                    <a href="#" class="attraction-card" data-attraction="tiantan">
+                        <img src="images/tiantan.jpg" alt="معبد السماء" class="attraction-img">
+                        <div class="attraction-info">
+                            <h3 class="attraction-name">معبد السماء</h3>
+                            <p class="attraction-description">
+                                يقع معبد السماء في حي تشونغون (سابقاً) بمدينة بكين، شرق شارع يونغدينغمن الداخلي. كان الموقع الذي كان أباطرة سلالتي مينغ وتشينغ يقدمون فيه القرابين لإله السماء (الإمبراطور شانغدي). بُني المعبد في الأصل في السنة الثامنة عشرة من حكم الإمبراطور يونغلي من سلالة مينغ (عام 1420 ميلادية)، ثم خضع بعد ذلك للتوسعة والإعادة مراراً وتكراراً حتى اكتمل بناؤه بالشكل النهائي في عهد الإمبراطور تشيان لونغ من سلالة تشينغ.
+                            </p>
+                            <div class="attraction-link">
+                                انقر لمعرفة المزيد <i class="fas fa-arrow-left"></i>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <!-- 故宫 -->
+                    <a href="#" class="attraction-card" data-attraction="gugong">
+                        <img src="images/gugong.jpg" alt="القصر الإمبراطوري" class="attraction-img">
+                        <div class="attraction-info">
+                            <h3 class="attraction-name">القصر الإمبراطوري</h3>
+                            <p class="attraction-description">
+                                القصر الإمبراطوري في بكين، الواقع في مدينة بكين بالصين، هو القصر الملكي الذي سكنه أباطرة سلالتي مينغ وتشينغ، وكان يُعرف سابقاً باسم "المدينة المحرّمة". يقع في مركز المحور المركزي لمدينة بكين، ويرتكز حول القاعات الثلاث الرئيسية. تبلغ مساحته حوالي 720 ألف متر مربع، مع مساحة بناء تصل إلى نحو 150 ألف متر مربع.
+                            </p>
+                            <div class="attraction-link">
+                                انقر لمعرفة المزيد <i class="fas fa-arrow-left"></i>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <!-- 颐和园 -->
+                    <a href="#" class="attraction-card" data-attraction="yiheyuan">
+                        <img src="images/yiheyuan.jpg" alt="قصر الصيف الإمبراطوري" class="attraction-img">
+                        <div class="attraction-info">
+                            <h3 class="attraction-name">قصر الصيف الإمبراطوري</h3>
+                            <p class="attraction-description">
+                                قصر الصيف الإمبراطوري (ييهي يوان)، وهو حديقة ملكية تعود إلى عصر أسرة تشينغ الصينية، وكان يُعرف سابقاً باسم "تشينغ يي يوان". يقع الحديقة في حَيّ هايديان في ضواحي بكين الغربية، على العنوان التالي: 19 طريق شينجيان غونغمن.
+                            </p>
+                            <div class="attraction-link">
+                                انقر لمعرفة المزيد <i class="fas fa-arrow-left"></i>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <!-- 八达岭长城 -->
+                    <a href="#" class="attraction-card" data-attraction="changcheng">
+                        <img src="images/changcheng.jpg" alt="سور الصين العظيم في بادالينغ" class="attraction-img">
+                        <div class="attraction-info">
+                            <h3 class="attraction-name">سور الصين العظيم في بادالينغ</h3>
+                            <p class="attraction-description">
+                                سور الصين العظيم في بادالينغ، الواقع عند المدخل الشمالي للممر القديم "جونغدو شان-غوانغو" في منطقة يانتشينغ ببكين، وتصل مساحة المنطقة المفتوحة للزيارة إلى 1.19 مليون متر مربع. يُعد هذا القسم جزءًا هامًا من سور الصين العظيم، ذلك المشروع الدفاعي العظيم من الصين القديمة.
+                            </p>
+                            <div class="attraction-link">
+                                انقر لمعرفة المزيد <i class="fas fa-arrow-left"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 上海景点内容 -->
+            <div class="city-content" id="shanghai-content">
+                <div class="attractions-grid">
+                    <!-- 东方明珠 -->
+                    <a href="#" class="attraction-card" data-attraction="dongfangmingzhu">
+                        <img src="images/dongfangmingzhu.jpg" alt="اللؤلؤة الشرقية" class="attraction-img">
+                        <div class="attraction-info">
+                            <h3 class="attraction-name">اللؤلؤة الشرقية</h3>
+                            <p class="attraction-description">
+                                برج اللؤلؤة الشرقية التلفزيوني والإذاعي، المختصر باسم "اللؤلؤة الشرقية"، يقع في العنوان رقم 1، طريق القرن، منطقة لوجيازوي، حي بودونغ الجديد، مدينة شانغهاي. يجاور البرج نهر هوانغبو، ويحتل موقعاً خلف مجموعة أبنية لوجيازوي الحديثة، ويتناغم مع مجموعة المباني ذات الطراز العالمي على الجانب الآخر من النهر في منطقة الويتان (البوند).
+                            </p>
+                            <div class="attraction-link">
+                                انقر لمعرفة المزيد <i class="fas fa-arrow-left"></i>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <!-- 上海迪士尼 -->
+                    <a href="#" class="attraction-card" data-attraction="shanghaidishini">
+                        <img src="images/shanghaidishini.jpg" alt="حديقة شانغهاي ديزني" class="attraction-img">
+                        <div class="attraction-info">
+                            <h3 class="attraction-name">حديقة شانغهاي ديزني</h3>
+                            <p class="attraction-description">
+                                حديقة شانغهاي ديزني، الواقعة في العنوان 310، طريق هوانغتشاو، بلدة تشوانشا الجديدة، منطقة بودونغ الجديدة، مدينة شانغهاي، جمهورية الصين الشعبية، افتتحت رسميًا في 16 يونيو 2016. تُعد أول حديقة موضوعية لديزني في البر الرئيسي الصيني، وأحد أكبر مشاريع التعاون الصيني الأجنبي في مجال الخدمات الحديثة.
+                            </p>
+                            <div class="attraction-link">
+                                انقر لمعرفة المزيد <i class="fas fa-arrow-left"></i>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <!-- 外滩 -->
+                    <a href="#" class="attraction-card" data-attraction="waitan">
+                        <img src="images/waitan.jpg" alt="الويتان" class="attraction-img">
+                        <div class="attraction-info">
+                            <h3 class="attraction-name">الويتان</h3>
+                            <p class="attraction-description">
+                                الويتان (البوند)، الواقع على ضفاف نهر هوانغبو في منطقة هوانغبو بمدينة شانغهاي، ويُعرف أيضًا بـ"الضفة الخارجية لهوانغبو"، هو حي تاريخي وثقافي صيني. بدءًا من عام 1844 (السنة الرابعة والعشرين من حقبة داوغوانغ في عهد أسرة تشينغ)، تم تحديد هذه المنطقة من الويتان كمستوطمة بريطانية.
+                            </p>
+                            <div class="attraction-link">
+                                انقر لمعرفة المزيد <i class="fas fa-arrow-left"></i>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <!-- 豫园 -->
+                    <a href="#" class="attraction-card" data-attraction="yuyuan">
+                        <img src="images/yuyuan.jpg" alt="حديقة يو يوان" class="attraction-img">
+                        <div class="attraction-info">
+                            <h3 class="attraction-name">حديقة يو يوان</h3>
+                            <p class="attraction-description">
+                                حديقة يو يوان (Yu Garden)، وتقع في العنوان 168 طريق فويو، منطقة هوانغبو، مدينة شانغهاي. بُنيت الحديقة في عصر أسرة مينغ خلال فترتي حكم الإمبراطور جياجينغ والإمبراطور وانلي، وقد تجاوز تاريخها 450 عامًا. تبلغ مساحتها أكثر من 30 مو (حوالي 2 هكتار). كانت تُعرف سابقًا مع حديقة لو شيانغ وحديقة ري شي بأنها "الحدائق الثلاث الشهيرة في شانغهاي خلال عصر مينغ".
+                            </p>
+                            <div class="attraction-link">
+                                انقر لمعرفة المزيد <i class="fas fa-arrow-left"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </main>
+
+        <!-- 页脚 -->
+        <footer id="contact">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>منصة السياحة والثقافة الصينية العربية</h3>
+                    <p>نحن نربط بين الثقافتين الصينية والعربية من خلال السياحة والتبادل الثقافي. نقدم معلومات دقيقة وشاملة عن أفضل الوجهات السياحية في الصين.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>روابط سريعة</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">الرئيسية</a></li>
+                        <li><a href="#attractions">الوجهات السياحية</a></li>
+                        <li><a href="#">خطط رحلتك</a></li>
+                        <li><a href="#">الدلائل الثقافية</a></li>
+                        <li><a href="#">مقالات سياحية</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>اتصل بنا</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> بكين، الصين</li>
+                        <li><i class="fas fa-phone"></i> +86 10 1234 5678</li>
+                        <li><i class="fas fa-envelope"></i> info@china-arab-tourism.com</li>
+                        <li><i class="fas fa-clock"></i> الأحد - الخميس: 9:00 - 17:00</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023 منصة السياحة والثقافة الصينية العربية. جميع الحقوق محفوظة.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 详细页面 - 天坛 -->
+    <div class="detail-page" id="tiantan-page">
+        <div class="detail-page-content">
+            <a href="#" class="back-button" data-back="home">
+                <i class="fas fa-arrow-right"></i> العودة إلى القائمة
+            </a>
+            
+            <div class="detail-header">
+                <h1 class="detail-title">معبد السماء</h1>
+            </div>
+            
+            <img src="images/tiantan.jpg" alt="معبد السماء" class="detail-main-image">
+            
+            <div class="detail-content">
+                <div class="detail-description">
+                    <p>يقع معبد السماء في حي تشونغون (سابقاً) بمدينة بكين، شرق شارع يونغدينغمن الداخلي. كان الموقع الذي كان أباطرة سلالتي مينغ وتشينغ يقدمون فيه القرابين لإله السماء (الإمبراطور شانغدي). بُني المعبد في الأصل في السنة الثامنة عشرة من حكم الإمبراطور يونغلي من سلالة مينغ (عام 1420 ميلادية)، ثم خضع بعد ذلك للتوسعة والإعادة مراراً وتكراراً حتى اكتمل بناؤه بالشكل النهائي في عهد الإمبراطور تشيان لونغ من سلالة تشينغ.</p>
+                    
+                    <p>تبلغ مساحة معبد السماء حوالي 2.73 مليون متر مربع، وتشمل مبانيه الرئيسية قاعة الصلاة من أجل الحصاد (تشينيانديان)، والمذبح الدائري (هوانتسو)، وقبة السماء الإمبراطورية (هوانغتشيونغيو)، وقصر الصيام (تسايقونغ)، ومكتب الموسيقى الإلهية (شينليوشو)، ومكان تقديم الأضاحي (شيشينغسو) وغيرها. تم تحويل الموقع إلى حديقة عامة في عام 1918 ميلادية.</p>
+                </div>
+                
+                <div class="detail-links">
+                    <a href="https://s.visitbeijing.com.cn/attraction/101409" target="_blank" class="detail-button">
+                        <i class="fas fa-external-link-alt"></i> الموقع الرسمي
+                    </a>
+                    <a href="#" class="detail-button" data-back="home">
+                        <i class="fas fa-arrow-right"></i> العودة إلى القائمة
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 详细页面 - 故宫 -->
+    <div class="detail-page" id="gugong-page">
+        <div class="detail-page-content">
+            <a href="#" class="back-button" data-back="home">
+                <i class="fas fa-arrow-right"></i> العودة إلى القائمة
+            </a>
+            
+            <div class="detail-header">
+                <h1 class="detail-title">القصر الإمبراطوري</h1>
+            </div>
+            
+            <img src="images/gugong.jpg" alt="القصر الإمبراطوري" class="detail-main-image">
+            
+            <div class="detail-content">
+                <div class="detail-description">
+                    <p>القصر الإمبراطوري في بكين، الواقع في مدينة بكين بالصين، هو القصر الملكي الذي سكنه أباطرة سلالتي مينغ وتشينغ، وكان يُعرف سابقاً باسم "المدينة المحرّمة". يقع في مركز المحور المركزي لمدينة بكين، ويرتكز حول القاعات الثلاث الرئيسية.</p>
+                    
+                    <p>تبلغ مساحته حوالي 720 ألف متر مربع، مع مساحة بناء تصل إلى نحو 150 ألف متر مربع، ويضم أكثر من سبعين قصراً وقاعة كبيرة وصغيرة. وفقاً للأسطورة، يحتوي القصر الإمبراطوري على 9999.5 غرفة، ولكن القياسات الميدانية التي أجراها الخبراء عام 1973 أظهرت أن العدد الفعلي للغرف هو 8707.</p>
+                    
+                    <p>يُعتبر القصر الإمبراطوري أحد أكبر المجمعات المعمارية القديمة الخشبية وأكملها حفظاً في العالم. في 4 مارس 1961، تم إدراجه ضمن الدفعة الأولى من الوحدات المحمية الرئيسية للتراث الثقافي على مستوى الدولة. وفي عام 1987، أُدرج ضمن قائمة التراث العالمي لليونسكو.</p>
+                </div>
+                
+                <div class="detail-links">
+                    <a href="https://www.dpm.org.cn/Home.html" target="_blank" class="detail-button">
+                        <i class="fas fa-external-link-alt"></i> الموقع الرسمي
+                    </a>
+                    <a href="#" class="detail-button" data-back="home">
+                        <i class="fas fa-arrow-right"></i> العودة إلى القائمة
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 详细页面 - 颐和园 -->
+    <div class="detail-page" id="yiheyuan-page">
+        <div class="detail-page-content">
+            <a href="#" class="back-button" data-back="home">
+                <i class="fas fa-arrow-right"></i> العودة إلى القائمة
+            </a>
+            
+            <div class="detail-header">
+                <h1 class="detail-title">قصر الصيف الإمبراطوري</h1>
+            </div>
+            
+            <img src="images/yiheyuan.jpg" alt="قصر الصيف الإمبراطوري" class="detail-main-image">
+            
+            <div class="detail-content">
+                <div class="detail-description">
+                    <p>قصر الصيف الإمبراطوري (ييهي يوان)، وهو حديقة ملكية تعود إلى عصر أسرة تشينغ الصينية، وكان يُعرف سابقاً باسم "تشينغ يي يوان". يقع الحديقة في حَيّ هايديان في ضواحي بكين الغربية، على العنوان التالي: 19 طريق شينجيان غونغمن.</p>
+                    
+                    <p>تُعدُّ هذه الحديقة الكبيرة من الحدائق الطبيعية المائية والجبلية، والتي بُنيت باستخدام بحيرة كونمينغ وجبل وانشووشان كقاعدة، ومحاكيةً لمشاهد بحيرة الغرب (شيخو) في هانغتشو، ومستوحاةً من بعض تقنيات التصميم والفلسفة الجمالية لحدائق جنوب اليانغتسي. وهي أيضاً أكثر الحدائق الملكية (القصور المؤقتة) اكتمالاً من حيث الحفظ، وتُلقَّب بـ"متحف الحدائق الإمبراطورية".</p>
+                    
+                    <p>تبلغ مساحة الحديقة الإجمالية 3.009 كيلومترات مربعة، تشغل المسطحات المائية حوالي ثلاثة أرباعها، وتتكون من جبل وانشووشان وبحيرة كونمينغ. تنتشر في أرجاء الحديقة أكثر من مائة مبنى تزييني ومنظر رئيسي، وأكثر من عشرين مجمع سكني (فناء) كبيراً وصغيراً، بالإضافة إلى ما يزيد عن ثلاثة آلاف غرفة في المباني القديمة، بمساحة بناء تقارب 70 ألف متر مربع، كما تحتوي على حوالي 1600 شجرة تاريخية ومعمرة.</p>
+                    
+                    <p>في 4 مارس 1961، أعلنت مجلس الدولة لجمهورية الصين الشعبية عن قصر الصيف كواحد من الدفعة الأولى من الوحدات المحمية الرئيسية للتراث الثقافية على المستوى الوطني. وفي ديسمبر 1998، أدرجت منظمة الأمم المتحدة للتربية والعلم والثقافة (اليونسكو) قصر الصيف في قائمة التراث العالمي.</p>
+                </div>
+                
+                <div class="detail-links">
+                    <a href="https://s.visitbeijing.com.cn/attraction/101407" target="_blank" class="detail-button">
+                        <i class="fas fa-external-link-alt"></i> الموقع الرسمي
+                    </a>
+                    <a href="#" class="detail-button" data-back="home">
+                        <i class="fas fa-arrow-right"></i> العودة إلى القائمة
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 详细页面 - 八达岭长城 -->
+    <div class="detail-page" id="changcheng-page">
+        <div class="detail-page-content">
+            <a href="#" class="back-button" data-back="home">
+                <i class="fas fa-arrow-right"></i> العودة إلى القائمة
+            </a>
+            
+            <div class="detail-header">
+                <h1 class="detail-title">سور الصين العظيم في بادالينغ</h1>
+            </div>
+            
+            <img src="images/changcheng.jpg" alt="سور الصين العظيم في بادالينغ" class="detail-main-image">
+            
+            <div class="detail-content">
+                <div class="detail-description">
+                    <p>سور الصين العظيم في بادالينغ، الواقع عند المدخل الشمالي للممر القديم "جونغدو شان-غوانغو" في منطقة يانتشينغ ببكين، وتصل مساحة المنطقة المفتوحة للزيارة إلى 1.19 مليون متر مربع.</p>
+                    
+                    <p>يُعد هذا القسم جزءًا هامًا من سور الصين العظيم، ذلك المشروع الدفاعي العظيم من الصين القديمة، وهو ممر استراتيجي (مَضِيق) في سور أسرة مينغ العظيم. كان سور الصين العظيم في بادالينغ حارسًا أماميًا حيويًا لممر "جيويونغ" الاستراتيجي، ويُضرب به المثل في الصين القديمة بقولهم: "خطورة جويونغ لا تكمن في الممر نفسه، بل في بادالينغ".</p>
+                </div>
+                
+                <div class="detail-links">
+                    <a href="https://www.badaling.cn/website/pc/index.html#/home" target="_blank" class="detail-button">
+                        <i class="fas fa-external-link-alt"></i> الموقع الرسمي
+                    </a>
+                    <a href="#" class="detail-button" data-back="home">
+                        <i class="fas fa-arrow-right"></i> العودة إلى القائمة
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 详细页面 - 东方明珠 -->
+    <div class="detail-page" id="dongfangmingzhu-page">
+        <div class="detail-page-content">
+            <a href="#" class="back-button" data-back="home">
+                <i class="fas fa-arrow-right"></i> العودة إلى القائمة
+            </a>
+            
+            <div class="detail-header">
+                <h1 class="detail-title">اللؤلؤة الشرقية</h1>
+            </div>
+            
+            <img src="images/dongfangmingzhu.jpg" alt="اللؤلؤة الشرقية" class="detail-main-image">
+            
+            <div class="detail-content">
+                <div class="detail-description">
+                    <p>برج اللؤلؤة الشرقية التلفزيوني والإذاعي، المختصر باسم "اللؤلؤة الشرقية"، يقع في العنوان رقم 1، طريق القرن، منطقة لوجيازوي، حي بودونغ الجديد، مدينة شانغهاي. يجاور البرج نهر هوانغبو، ويحتل موقعاً خلف مجموعة أبنية لوجيازوي الحديثة، ويتناغم مع مجموعة المباني ذات الطراز العالمي على الجانب الآخر من النهر في منطقة الويتان (البوند).</p>
+                    
+                    <p>بدأ بناء البرج في 30 يوليو 1991، وافتتح للاستخدام في 1 أكتوبر 1994. يعد البرج أحد المباني الشهيرة في شانغهاي الذي يجمع بين وظائف متعددة مثل الإطلال على المدينة، والمطاعم العصرية، والتسوق والترفيه، وعرض التاريخ، وجولات نهر هوانغبو، والعروض المؤتمرية والمعارض، وبث الراديو والتلفزيون.</p>
+                    
+                    <p>حتى عام 2019، يحتل البرج المرتبة السادسة بين أطول الأبراج في آسيا والمرتبة التاسعة على مستوى العالم.</p>
+                </div>
+                
+                <div class="detail-links">
+                    <a href="https://www.orientalpearltower.com/city.php#/" target="_blank" class="detail-button">
+                        <i class="fas fa-external-link-alt"></i> الموقع الرسمي
+                    </a>
+                    <a href="#" class="detail-button" data-back="home">
+                        <i class="fas fa-arrow-right"></i> العودة إلى القائمة
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 详细页面 - 上海迪士尼 -->
+    <div class="detail-page" id="shanghaidishini-page">
+        <div class="detail-page-content">
+            <a href="#" class="back-button" data-back="home">
+                <i class="fas fa-arrow-right"></i> العودة إلى القائمة
+            </a>
+            
+            <div class="detail-header">
+                <h1 class="detail-title">حديقة شانغهاي ديزني</h1>
+            </div>
+            
+            <img src="images/shanghaidishini.jpg" alt="حديقة شانغهاي ديزني" class="detail-main-image">
+            
+            <div class="detail-content">
+                <div class="detail-description">
+                    <p>حديقة شانغهاي ديزني، الواقعة في العنوان 310، طريق هوانغتشاو، بلدة تشوانشا الجديدة، منطقة بودونغ الجديدة، مدينة شانغهاي، جمهورية الصين الشعبية، افتتحت رسميًا في 16 يونيو 2016.</p>
+                    
+                    <p>تُعد أول حديقة موضوعية لديزني في البر الرئيسي الصيني، وأحد أكبر مشاريع التعاون الصيني الأجنبي في مجال الخدمات الحديثة. وهي حديقة موضوعية تجسد الطابع الأصيل لديزني مع مزجها الانسجامي للعناصر الصينية.</p>
+                </div>
+                
+                <div class="detail-links">
+                    <a href="https://www.shanghaidisneyresort.com/" target="_blank" class="detail-button">
+                        <i class="fas fa-external-link-alt"></i> الموقع الرسمي
+                    </a>
+                    <a href="#" class="detail-button" data-back="home">
+                        <i class="fas fa-arrow-right"></i> العودة إلى القائمة
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 详细页面 - 外滩 -->
+    <div class="detail-page" id="waitan-page">
+        <div class="detail-page-content">
+            <a href="#" class="back-button" data-back="home">
+                <i class="fas fa-arrow-right"></i> العودة إلى القائمة
+            </a>
+            
+            <div class="detail-header">
+                <h1 class="detail-title">الويتان</h1>
+            </div>
+            
+            <img src="images/waitan.jpg" alt="الويتان" class="detail-main-image">
+            
+            <div class="detail-content">
+                <div class="detail-description">
+                    <p>الويتان (البوند)، الواقع على ضفاف نهر هوانغبو في منطقة هوانغبو بمدينة شانغهاي، ويُعرف أيضًا بـ"الضفة الخارجية لهوانغبو"، هو حي تاريخي وثقافي صيني.</p>
+                    
+                    <p>بدءًا من عام 1844 (السنة الرابعة والعشرين من حقبة داوغوانغ في عهد أسرة تشينغ)، تم تحديد هذه المنطقة من الويتان كمستوطمة بريطانية، فأصبحت تجسيدًا حيًا لـ"شانغهاي الدولية" التي تمتد على مدى الأميال، كما تمثل نقطة البداية لمنطقة المستوطنات الأجنبية في شانغهاي القديمة ولبداية التحضر الحديث لمدينة شانغهاي ككل.</p>
+                </div>
+                
+                <div class="detail-links">
+                    <a href="https://www.bundcenter.com/" target="_blank" class="detail-button">
+                        <i class="fas fa-external-link-alt"></i> الموقع الرسمي
+                    </a>
+                    <a href="#" class="detail-button" data-back="home">
+                        <i class="fas fa-arrow-right"></i> العودة إلى القائمة
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 详细页面 - 豫园 -->
+    <div class="detail-page" id="yuyuan-page">
+        <div class="detail-page-content">
+            <a href="#" class="back-button" data-back="home">
+                <i class="fas fa-arrow-right"></i> العودة إلى القائمة
+            </a>
+            
+            <div class="detail-header">
+                <h1 class="detail-title">حديقة يو يوان</h1>
+            </div>
+            
+            <img src="images/yuyuan.jpg" alt="حديقة يو يوان" class="detail-main-image">
+            
+            <div class="detail-content">
+                <div class="detail-description">
+                    <p>حديقة يو يوان (Yu Garden)، وتقع في العنوان 168 طريق فويو، منطقة هوانغبو، مدينة شانغهاي. بُنيت الحديقة في عصر أسرة مينغ خلال فترتي حكم الإمبراطور جياجينغ والإمبراطور وانلي، وقد تجاوز تاريخها 450 عامًا.</p>
+                    
+                    <p>تبلغ مساحتها أكثر من 30 مو (حوالي 2 هكتار). كانت تُعرف سابقًا مع حديقة لو شيانغ وحديقة ري شي بأنها "الحدائق الثلاث الشهيرة في شانغهاي خلال عصر مينغ". وتتصدر قائمة أكبر خمس حدائق كلاسيكية باقية في شانغهاي. وهي مصنفة كمنطقة جذب سياحي وطنية من الفئة AAAA.</p>
+                </div>
+                
+                <div class="detail-links">
+                    <a href="https://www.yugarden.com.cn/page/articleView/index.html" target="_blank" class="detail-button">
+                        <i class="fas fa-external-link-alt"></i> الموقع الرسمي
+                    </a>
+                    <a href="#" class="detail-button" data-back="home">
+                        <i class="fas fa-arrow-right"></i> العودة إلى القائمة
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 城市标签切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const cityTabs = document.querySelectorAll('.city-tab');
+            const cityContents = document.querySelectorAll('.city-content');
+            
+            cityTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // 移除所有标签的active类
+                    cityTabs.forEach(t => t.classList.remove('active'));
+                    // 添加当前标签的active类
+                    this.classList.add('active');
+                    
+                    // 隐藏所有内容
+                    cityContents.forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // 显示对应内容
+                    const cityId = this.getAttribute('data-city') + '-content';
+                    document.getElementById(cityId).classList.add('active');
+                });
+            });
+            
+            // 平滑滚动
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if(targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if(targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // 导航栏滚动效果
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('header');
+                if(window.scrollY > 100) {
+                    header.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
+                    header.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+                } else {
+                    header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+                    header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+                }
+            });
+            
+            // 景点卡片点击事件 - 显示详细页面
+            document.querySelectorAll('.attraction-card').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const attractionId = this.getAttribute('data-attraction');
+                    showDetailPage(attractionId);
+                });
+            });
+            
+            // 返回按钮点击事件
+            document.querySelectorAll('.back-button, .detail-button[data-back="home"]').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showHomePage();
+                });
+            });
+            
+            // 图片加载错误处理
+            document.querySelectorAll('img').forEach(img => {
+                img.addEventListener('error', function() {
+                    console.error('图片加载失败:', this.src);
+                    // 可以在这里设置一个默认图片
+                    // this.src = 'images/default.jpg';
+                });
+                
+                img.addEventListener('load', function() {
+                    console.log('图片加载成功:', this.src);
+                });
+            });
+            
+            // 显示首页
+            function showHomePage() {
+                document.getElementById('home-page').style.display = 'block';
+                document.querySelectorAll('.detail-page').forEach(page => {
+                    page.style.display = 'none';
+                });
+                
+                // 滚动到顶部
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+            
+            // 显示详细页面
+            function showDetailPage(attractionId) {
+                // 隐藏首页
+                document.getElementById('home-page').style.display = 'none';
+                
+                // 隐藏所有详细页面
+                document.querySelectorAll('.detail-page').forEach(page => {
+                    page.style.display = 'none';
+                });
+                
+                // 显示对应的详细页面
+                const detailPage = document.getElementById(attractionId + '-page');
+                if(detailPage) {
+                    detailPage.style.display = 'block';
+                    
+                    // 滚动到顶部
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+            
+            // 页面加载时显示首页
+            showHomePage();
+            
+            // 在控制台显示调试信息
+            console.log('页面加载完成');
+            console.log('如果图片不显示，请检查：');
+            console.log('1. 图片文件是否存在');
+            console.log('2. 图片文件名是否正确');
+            console.log('3. 图片路径是否正确 (images/文件名.jpg)');
+        });
+    </script>
+</body>
+</html>

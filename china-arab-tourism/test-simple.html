@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>简单图片测试</title>
+</head>
+<body>
+    <h1>图片路径测试</h1>
+    
+    <h2>测试1：直接引用图片</h2>
+    <img src="images/tiantan.jpg" alt="天坛" width="300">
+    <p>路径: images/tiantan.jpg</p>
+    
+    <h2>测试2：检查文件是否存在</h2>
+    <div id="result"></div>
+    
+    <script>
+        // 创建一个简单的图片检查
+        const img = new Image();
+        img.onload = function() {
+            document.getElementById('result').innerHTML = 
+                '<p style="color:green;">✓ 图片加载成功！文件存在。</p>';
+        };
+        img.onerror = function() {
+            document.getElementById('result').innerHTML = 
+                '<p style="color:red;">✗ 图片加载失败！请检查：<br>' +
+                '1. 是否有 images 文件夹<br>' +
+                '2. 是否有 tiantan.jpg 文件<br>' +
+                '3. 文件是否损坏</p>';
+        };
+        img.src = 'images/tiantan.jpg';
+    </script>
+</body>
+</html>
